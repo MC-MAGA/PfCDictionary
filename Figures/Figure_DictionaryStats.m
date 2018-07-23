@@ -7,13 +7,6 @@ clear all; close all
 % where are the data? Intermediate results too large for GitHub
 filepath = 'C:\Users\lpzmdh\Dropbox\My Papers\PfC sampling hypothesis\Dictionary version 2\figures\Large_Intermediate_Results\';
 
-%     procpath = 'C:\Users\lpzmdh\Dropbox\My Papers\PfC sampling hypothesis\Dictionary version 2\Results viz\';
-% else
-%     filepath = '/Users/mqbssmhg/Dropbox/Analyses/PfC Sampling hypothesis/';
-%     procpath = '/Users/mqbssmhg/Dropbox/My Papers/PfC sampling hypothesis/Dictionary version 2/Results viz/';
-%     
-% end
-
 % style sheet
 run figure_properties
 
@@ -88,7 +81,7 @@ FormatFig_For_Export(gcf,fontsize,fontname,widths.axis)
 % export
 
 load([filepath 'DataWords_And_Counts_N' num2str(N) '_' type],'binsizes')
-load ([procpath 'ActivityPattern_Analyses_N' num2str(N) '_' type],'Data','SData','CI')
+load (['../Analysis code/ActivityPattern_Analyses_N' num2str(N) '_' type],'Data','SData','CI')
 
 figure('Units', 'centimeters', 'PaperPositionMode', 'auto','Position',[10 15 figsize]);
 loglog(binsizes,100*Data.PChange.Trials,'o-','Linewidth',widths.plot,'MarkerSize',M,'Color',colours.trials.marker,'MarkerFaceColor',colours.trials.marker,'MarkerEdgeColor',colours.trials.edge); hold on
@@ -124,7 +117,7 @@ load([filepath 'DataWords_And_Counts_N' num2str(N) '_' type],'binsizes')
 
 % NB could also do these locally, by just reformatting UWord into matrices,
 % as done in "ConservationOfDictionary_Properties"
-load([procpath 'ConservationOfDictionary_Analyses_N' num2str(N) '_' type],'Data','SData','CI','alpha')
+load(['../Analysis code/ConservationOfDictionary_Analyses_N' num2str(N) '_' type],'Data','SData','CI','alpha')
 
 h = plotMultiStrip(binsizes,Data.Pre.PCommonWords.*100,smallstrp,colours.pre,widths,fontsize,fontname,'Word binsize (ms)','Common words (%)',...
                         xtickSmall,strXlabelSmall,[xmin xmax],[0 100],M);

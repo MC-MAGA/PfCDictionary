@@ -196,7 +196,7 @@ Data.Prop.Diff.Pre = Data.Prop.Pre - mean(SData.Prop.Pre);
 Data.Prop.Diff.Post = Data.Prop.Post - mean(SData.Prop.Post);
 
 
-% save(['ActivityPattern_Analyses_N' num2str(N) '_' type],'Data','SData','CI')
+save(['ActivityPattern_Analyses_N' num2str(N) '_' type],'Data','SData','CI')
 
 
 
