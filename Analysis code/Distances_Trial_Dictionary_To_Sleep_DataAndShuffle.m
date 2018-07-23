@@ -3,11 +3,8 @@
 
 clear all; close all
 
-if ispc
-    filepath = 'C:\Users\mqbssmhg.DS\Dropbox\Analyses\PfC Sampling hypothesis\';
-else
-    filepath = '/Users/mqbssmhg/Dropbox/Analyses/PfC Sampling hypothesis/';
-end
+% where are the data? Intermediate results too large for GitHub
+filepath = 'C:\Users\lpzmdh\Dropbox\My Papers\PfC sampling hypothesis\Dictionary version 2\figures\Large_Intermediate_Results\';
 
 type = 'Learn'; % 'Stable85';  %'Learn'
 N = 35; % word-size

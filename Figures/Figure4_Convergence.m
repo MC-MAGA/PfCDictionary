@@ -8,12 +8,11 @@
 
 clear all; close all
 
-% where are the data?
-if ispc
-    filepath = 'C:\Users\lpzmdh\Dropbox\Analyses\PfC Sampling hypothesis\';
-else
-    filepath = '/Users/mqbssmhg/Dropbox/Analyses/PfC Sampling hypothesis/';    
-end
+
+% where are the data? Intermediate results too large for GitHub
+filepath = 'C:\Users\lpzmdh\Dropbox\My Papers\PfC sampling hypothesis\Dictionary version 2\figures\Large_Intermediate_Results\';
+
+localpath = '../Analysis code/';
 
 % style sheet
 run figure_properties
@@ -38,9 +37,9 @@ pTrial = PWord(iSession).Bins(iBin).Trials.P; IDtrial = PWord(iSession).Bins(iBi
 plotScatter(pTrial(cmnTrial),pPre(cmnPre),[],figsize,colours.learning,widths,fontsize,fontname,'P(Trials)','P(Pre)',1,3);
 set(gca,'XScale','log','YScale','log','XLim',[1e-6 1],'yLim',[1e-6 1])
 set(gca,'XTick',[1e-6 1e-4 1e-2 1],'YTick',[1e-6 1e-4 1e-2 1])
-print([exportpath 'Fig4_TrialVsPre_Scatter'],'-dsvg'); 
+%print([exportpath 'Fig4_TrialVsPre_Scatter'],'-dsvg'); 
 
-load([filepath 'Dictionary_Convergence_Analyses_N35_Learn'])
+load([localpath 'Dictionary_Convergence_Analyses_N35_Learn'])
 % use Trial dictionary only Distances (as plotted here)
 D_Trial_Pre = Data.DTrial.TrialsPre(iSession,iBin) 
 D_Trial_Post = Data.DTrial.TrialsPost(iSession,iBin)
@@ -51,13 +50,13 @@ pPost = PWord(iSession).Bins(iBin).Post.P; IDpost = PWord(iSession).Bins(iBin).P
 plotScatter(pTrial(cmnTrial),pPost(cmnPost),[],figsize,colours.learning,widths,fontsize,fontname,'P(Trials)','P(Post)',1,3);
 set(gca,'XScale','log','YScale','log','XLim',[1e-6 1],'yLim',[1e-6 1])
 set(gca,'XTick',[1e-6 1e-4 1e-2 1],'YTick',[1e-6 1e-4 1e-2 1])
-print([exportpath 'Fig4_TrialVsPost_Scatter'],'-dsvg'); 
+%print([exportpath 'Fig4_TrialVsPost_Scatter'],'-dsvg'); 
 
 
 %% linked strip-plot: Learn, at 5 ms (Trial only)
 
 % load
-load([filepath 'Dictionary_Convergence_Analyses_N35_Learn'])
+load([localpath 'Dictionary_Convergence_Analyses_N35_Learn'])
 
 % trials-only
 figure('Units', 'centimeters', 'PaperPositionMode', 'auto','Position',[10 15 2 3.5]); 
@@ -68,13 +67,13 @@ ylabel('Distance')
 set(gca,'YLim',[0 0.4])
 set(gca,'XTick',xtick,'XTickLabel',strDlabel,'XMinorTick','off')
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
-print([exportpath 'Fig4_Learn_Distance_5ms_TrialOnly'],'-dsvg');     
+%print([exportpath 'Fig4_Learn_Distance_5ms_TrialOnly'],'-dsvg');     
 
 
 %% linked strip-plot: Stable, at 5ms (Trial only)
 
 % load
-load([filepath 'Dictionary_Convergence_Analyses_N35_Stable85'])
+load([localpath 'Dictionary_Convergence_Analyses_N35_Stable85'])
 
 % trials-only
 figure('Units', 'centimeters', 'PaperPositionMode', 'auto','Position',[10 15 2 3.5]); 
@@ -85,14 +84,14 @@ ylabel('Distance')
 set(gca,'YLim',[0 0.4])
 set(gca,'XTick',xtick,'XTickLabel',strDlabel,'XMinorTick','off')
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
-print([exportpath 'Fig4_Stable_Distance_5ms_TrialOnly'],'-dsvg');     
+%print([exportpath 'Fig4_Stable_Distance_5ms_TrialOnly'],'-dsvg');     
 
 
 
 %% panel: summary over binsizes Learn (Trial only)
 % load
 load([filepath 'DataWords_And_Counts_N' num2str(N) '_' type],'binsizes')
-load([filepath 'Dictionary_Convergence_Analyses_N35_Learn'])
+load([localpath 'Dictionary_Convergence_Analyses_N35_Learn'])
 
 h = plotMultiStrip(binsizes,Data.DTrial.IConvergence,Convergefigsize,colours.learning,widths,fontsize,fontname,...
                     'Word binsize (ms)','Convergence',xtickSmall,strXlabelSmall,[xmin xmax],[-0.4 0.4],M);
@@ -103,18 +102,12 @@ for iB = 1:numel(binsizes)
     h = text(binsizes(iB)-lW*binsizes(iB),0.35,str,'Fontsize',fontsize-1);
     set(h,'Rotation',45)
 end
-print([exportpath 'Fig4_LearnConvergence_TrialOnly'],'-dsvg');     
-
-% for reporting
-MeanAt5ms = mean(Data.DTrial.IConvergence(:,iBin))
-CI95At5ms = CIfromSEM(std(Data.DTrial.IConvergence(:,iBin)),numel(Data.DTrial.IConvergence(:,iBin)),0.95);
-Upper = MeanAt5ms + CI95At5ms
-Lower = MeanAt5ms - CI95At5ms
+%print([exportpath 'Fig4_LearnConvergence_TrialOnly'],'-dsvg');     
 
 %% panel: summary over binsizes Stable 85 (Trial only)
 
 load([filepath 'DataWords_And_Counts_N' num2str(N) '_' type],'binsizes')
-load([filepath 'Dictionary_Convergence_Analyses_N35_Stable85'])
+load([localpath 'Dictionary_Convergence_Analyses_N35_Stable85'])
 
 h = plotMultiStrip(binsizes,Data.DTrial.IConvergence,Convergefigsize,colours.stable,widths,fontsize,fontname,...
                     'Word binsize (ms)','Convergence',xtickSmall,strXlabelSmall,[xmin xmax],[-0.4 0.4],M);
@@ -125,17 +118,13 @@ for iB = 1:numel(binsizes)
     h = text(binsizes(iB)-lW*binsizes(iB),0.35,str,'Fontsize',fontsize-1);
     set(h,'Rotation',45)
 end
-print([exportpath 'Fig4_StableConvergence_TrialOnly'],'-dsvg');     
+%print([exportpath 'Fig4_StableConvergence_TrialOnly'],'-dsvg');     
 
-% for reporting
-MeanAt5ms = mean(Data.DTrial.IConvergence(:,iBin))
-CI95At5ms = CIfromSEM(std(Data.DTrial.IConvergence(:,iBin)),numel(Data.DTrial.IConvergence(:,iBin)),0.95);
-Upper = MeanAt5ms + CI95At5ms
-Lower = MeanAt5ms - CI95At5ms
+
 
 %% panel: summary over binsizes Learn (all dictionary)
 load([filepath 'DataWords_And_Counts_N' num2str(N) '_' type],'binsizes')
-load([filepath 'Dictionary_Convergence_Analyses_N35_Learn'])
+load([localpath 'Dictionary_Convergence_Analyses_N35_Learn'])
 
 h = plotMultiStrip(binsizes,Data.IConvergence,Convergefigsize,colours.learning,widths,fontsize,fontname,...
                     'Word binsize (ms)','Convergence',xtickSmall,strXlabelSmall,[xmin xmax],[-0.4 0.4],M);
@@ -146,13 +135,13 @@ for iB = 1:numel(binsizes)
     h = text(binsizes(iB)-lW*binsizes(iB),0.35,str,'Fontsize',fontsize-1);
     set(h,'Rotation',45)
 end
-print([exportpath 'Fig4_LearnConvergence_All'],'-dsvg');     
+%print([exportpath 'Fig4_LearnConvergence_All'],'-dsvg');     
 
 
 %% panel: summary over binsizes Stable 85 (all dictionary)
 
 load([filepath 'DataWords_And_Counts_N' num2str(N) '_' type],'binsizes')
-load([filepath 'Dictionary_Convergence_Analyses_N35_Stable85'])
+load([localpath 'Dictionary_Convergence_Analyses_N35_Stable85'])
 
 h = plotMultiStrip(binsizes,Data.IConvergence,Convergefigsize,colours.stable,widths,fontsize,fontname,...
                     'Word binsize (ms)','Convergence',xtickSmall,strXlabelSmall,[xmin xmax],[-0.4 0.4],M);
@@ -163,4 +152,4 @@ for iB = 1:numel(binsizes)
     h = text(binsizes(iB)-lW*binsizes(iB),0.35,str,'Fontsize',fontsize-1);
     set(h,'Rotation',45)
 end
-print([exportpath 'Fig4_StableConvergence_All'],'-dsvg');     
+%print([exportpath 'Fig4_StableConvergence_All'],'-dsvg');     
