@@ -15,8 +15,8 @@ All of the following appear in versions for Data, Shuffled, and Jittered spike t
 * Data_Pword: probability of each word appearing in each epoch 
 * Data_UniqueWord: comparing dictionary contents between epochs
 
-* Data_Sleep_Changes : distances between P(word) distributions between sleep epochs 
-* Data_Sleep_ChangesK2 : distances between P(word) distributions between sleep epochs, restricted to K>=2 words
+* Data_Sleep_Changes : distances between P(word) distributions of each sleep epoch 
+* Data_Sleep_ChangesK2 : distances between P(word) distributions of each sleep epoch, restricted to K>=2 words
 * Data_DeltaPWord : change in word probability between epochs (no Jittered version of this)
 
 ## Position-dependent analyses
