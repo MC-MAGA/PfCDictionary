@@ -87,5 +87,5 @@ Data.Trials.Diff.PCommonWords = Data.Trials.PCommonWords - SData.Trials.M_Pcommo
 Data.Pre.Diff.PCommonWords = Data.Pre.PCommonWords - SData.Pre.M_Pcommon;
 Data.Post.Diff.PCommonWords = Data.Post.PCommonWords - SData.Post.M_Pcommon;
 
-% save(['ConservationOfDictionary_Analyses_N' num2str(N) '_' type],'Data','SData','CI','alpha')
+save(['ConservationOfDictionary_Analyses_N' num2str(N) '_' type],'Data','SData','CI','alpha')
         

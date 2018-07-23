@@ -161,7 +161,7 @@ h = plotMultiStrip(binsizes,Data.Post.Punique*100,figsize,colours.post,widths,fo
 
 %% panel: proportion of time taken up by common words
 load([filepath 'DataWords_And_Counts_N' num2str(N) '_' type],'binsizes')
-load([filepath 'PropTime_Data_N' num2str(N) '_' type])
+load(['../Analysis code/PropTime_Data_N' num2str(N) '_' type])
 
 Nsessions = numel(PTime); 
 

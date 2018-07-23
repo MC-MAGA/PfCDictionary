@@ -1,4 +1,4 @@
-%% get P(words) and compute unique words
+%% compute differences in P(word) between epochs
 clear all; close all
 
 type = 'Learn'; % 'Learn'; % 'Learn'; % Stable85
