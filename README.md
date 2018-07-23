@@ -9,6 +9,7 @@ Shuffle_PartitionedSpike_Data: creates the shuffled data sets from the supplied 
 Jitter_PartitionedSpike_Data: creates the jittered data sets from the supplied partitioned spike data
 
 All of the following appear in versions for Data, Shuffled, and Jittered spike trains:
+
 GetWords_And_Count_Them: creates the words from the partitioned spike data 
 
 Data_Pword: probability of each word appearing in each epoch 
