@@ -14,23 +14,21 @@ addpath('../Helper functions/');
 %     filepath = '/Users/mqbssmhg/Dropbox/Analyses/PfC Sampling hypothesis/';
 % end
 
-% Original code: given original data (on CRCNS.org) organised into one folder per session
-% this processes breakdown of defined list of sessions into trials and epochs
-% Note: this breakdown only used to plot a panel in this figure, not for
-% any analysis
-% datapath = 'C:....';  % location of folders 
+% O process times breakdown of sessions into trials and epochs
+% datapath = 'C:....';
 % learning_Sessions = {'150628','150630','150707',...
 %                      '181012','181020',...
 %                      '190214','190228',...
 %                      '201222','201227','201229'};
+% n = numel(learning_Sessions);
 % SessionElements = BreakdownSessionTimes(datapath,learning_Sessions);
-% save SessionElements SessionElements   % save the breakdown
+% save SessionElements SessionElements
 
 ixExample = 6;     % which example learning session> 150628 (index is into "session" struct)
                  
 
 load SessionElements    % breakdown of learning sessions into components
-load('../Processed data/SessionReward');  % reward curve data per learning session (from "reward_rates.m")
+load('../Processed data/SessionReward');  % reward curve data per learning session
 
 n = numel(SessionElements);     % number of learning sessions
 
@@ -70,9 +68,34 @@ FormatFig_For_Export(gcf,fontsize,fontname,widths.axis)
 print([exportpath 'Fig1_session_durations'],'-dsvg');
 
 
+%% inset: separate histogram of all rest period intervals - don't need if not analysing
+% figure('Units', Units, 'PaperPositionMode', 'auto','Position',[10 15 1.5 2.5]); hold on;
+% scatter(ones(n,1),[session(:).restT],'MarkerEdgeColor',[0.7 0.2 0.7],'SizeData',5); hold on
+% line([0.9 1.1],[mean([session(:).restT]),mean([session(:).restT])],'Color','k','Linewidth',errorlinewidth)
+% line([1 1],[mean([session(:).restT])-2*std([session(:).restT])/sqrt(n),mean([session(:).restT])+2*std([session(:).restT])/sqrt(n)],'Color','k','Linewidth',errorlinewidth)
+% set(gca,'XTick',[],'YTick',[0,250,500,750,1000]);
+% pos = get(gca,'Position');
+% set(gca,'Position',[pos(1) pos(2) 0.25 pos(4)])
+% ylabel('Post-task rest (s)','FontSize',fontsize); 
+% set(gca,'FontName','Helvetica','FontSize',fontsize);
+% set(gca,'Box','off','TickDir','out','LineWidth',axlinewidth);
+% 
+% print('-depsc',['Fig1_inset_rest_duration']);
 
 %% learning curves
+
+
 nSessions = numel(session);
+
+% overlay all stair plots
+% figure('Units', Units, 'PaperPositionMode', 'auto','Position',[10 15 4 4]); hold on;
+% line([0 0],[-15 20],'Color',[0.7 0.7 0.7])
+% for iS = 1:nSessions
+%     x = [1:session(iS).nTrials] - session(iS).learningtrial;
+%     y = session(iS).cumR - session(iS).cumR(session(iS).learningtrial);
+%     stairs(x,y)
+% end
+% axis tight
 
 % single example
 
@@ -118,12 +141,20 @@ set(hc,'xaxisloc','top')
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis)
 
 print('-dsvg',[exportpath 'Heatmap_cumulative_reward']);
+% exportfig(gcf,[exportpath 'Heatmap_Cumulative_Reward'],'Color',color,'Format',format,'Resolution',dpi)
+
+% figure('Units', Units, 'PaperPositionMode', 'auto','Position',[10 15 4 4]); hold on;
+% imagesc(-maxPre:maxPost-1,1:nSessions,matD_Rcumul)
+% colormap(Rcmap)
+% axis tight
+% line([0 0],[0.5 10.5],'Color',[0.7 0.7 0.7],'LineWidth',plotlinewidth)
+
 
 
 %% example time-series of strategy choice
 % sliding window analysis from Simple-Strategy here....
 
-load([strategypath 'SimpleStrategy_0.85.mat'],'Sessions','pars'); % load Stable sessions - names and time-series
+load([strategypath 'SimpleStrategy_0.9.mat'],'Sessions','pars'); % load Stable sessions - names and time-series
 ixLearning = find([Sessions(:).OfficialLearn]);
 
 

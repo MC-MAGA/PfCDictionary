@@ -138,7 +138,7 @@ end
 
 Session_Strategy_Table = struct2table(Sessions)
 
-% save(['SimpleStrategy_' num2str(pars.ThetaStable) '.mat'],'Sessions','pars');
+save(['SimpleStrategy_' num2str(pars.ThetaStable) '.mat'],'Sessions','pars');
 
 
 %% check stuff
