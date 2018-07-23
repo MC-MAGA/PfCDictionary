@@ -13,6 +13,9 @@ These basic data are processed from the 53 sessions made available to us by Adri
 
 ## Intermediate results files
 The output of the further analysis scripts for word, dictionaries, and locations are too large for GitHub. These are available here:
+* Data analysis: https://figshare.com/articles/Data_analysis_intermediate_results_files/6850664
+* Shuffled data analysis: https://figshare.com/articles/Shuffled_data_intermediate_results_files/6850565
+* Jittered data analysis: https://figshare.com/articles/Jittered_data_results_files/6850646
 
 ## Key scripts
 Shuffle_PartitionedSpike_Data: creates the shuffled data sets from the supplied partitioned spike data
