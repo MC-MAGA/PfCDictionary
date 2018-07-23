@@ -1,15 +1,14 @@
 % script to assess position data
 clear all; close all
 
-type = 'Stable85';  % 'Learn','Stable85'
+type = 'Learn';  % 'Learn','Stable85'
 
-if ispc
-    filepath = 'C:\Users\mqbssmhg.DS\Dropbox\SpikeData\Adriens sample of Behaviour and Spikes\';
-else
-    filepath = '/Users/mqbssmhg/Dropbox/SpikeData/Adriens sample of Behaviour and Spikes/';
-end
+% path to location of CRCNS data files
+filepath = 'C:\Users\lpzmdh\Dropbox\SpikeData\Adriens sample of Behaviour and Spikes\';
 
-load(['PartitionedSpike_Data_N35_' type],'Times');
+localpath = '../Analysis code/';
+
+load(['../Processed data/PartitionedSpike_Data_N35_' type],'Times');
 
 % properties of the Y-maze
 arm_length = 85;  % cm
@@ -25,7 +24,7 @@ switch type
         Nsessions = numel(analyse_trial_session);
         
     case 'Stable85'
-        load SimpleStable_0.85.mat
+        load([localpath 'SimpleStable_0.85.mat'])
         Nsessions = numel(SimpleStable.Names);
         for iN = 1:Nsessions
             analyse_trial_session{iN} = num2str(SimpleStable.Names(iN));

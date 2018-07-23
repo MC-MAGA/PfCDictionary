@@ -10,14 +10,8 @@ jittersize = [2 5 10 20 50];  % Gaussian sigma in milliseconds
 type = 'Stable85';  % 'Learn','Stable85'
 N = 35;
 
-if ispc
-    filepath = 'C:\Users\mqbssmhg.DS\Dropbox\SpikeData\Adriens sample of Behaviour and Spikes\';
-else
-    filepath = '/Users/mqbssmhg/Dropbox/SpikeData/Adriens sample of Behaviour and Spikes/';
-end
-
 % load per-trial and per-bout spike and ISI data
-load(['PartitionedSpike_Data_N' num2str(N) '_' type]);
+load(['../Processed data/PartitionedSpike_Data_N' num2str(N) '_' type]);
 
 %% for each session, jitter spikes
 Nsessions = numel(Times);

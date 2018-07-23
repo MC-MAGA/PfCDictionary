@@ -5,7 +5,7 @@ clear all; close all
 type = 'Learn';  % 'Learn','Stable85'
 N = 35;  % 35, 15
 
-load(['PartitionedSpike_Data_N' num2str(N) '_' type])
+load(['../Processed data/PartitionedSpike_Data_N' num2str(N) '_' type])
 
 Nsessions = numel(Data);
 

@@ -11,7 +11,7 @@ filepath = 'C:\Users\lpzmdh\Dropbox\My Papers\PfC sampling hypothesis\Dictionary
 type = 'Stable85';  % 'Learn','Stable85'
 N = 35;  % 15, 35
 %% load partitioned data
-load(['PartitionedSpike_Data_N' num2str(N) '_' type],'Times');
+load(['../Processed data/PartitionedSpike_Data_N' num2str(N) '_' type],'Times');
 load([filepath 'Jittered_TrialsSpike_Data_N' num2str(N) '_' type]);  % get data partitions into trials and bouts
 load([filepath 'Jittered_PreSpike_Data_N' num2str(N) '_' type]);  % get data partitions into trials and bouts
 load([filepath 'Jittered_PostSpike_Data_N' num2str(N) '_' type]);  % get data partitions into trials and bouts
