@@ -37,7 +37,7 @@ switch type
         Lcolor = [0 0 0]; colours.learning.line;
         MEdgeColor = [1 1 1];
 
-    case 'Stable85'  %% not all data available for this analysis: Shuffled Stable datasets do not have locations
+    case 'Stable85'  %% not all data available for this analysis: Shuffled Stable 
         Mcolor = colours.stable.marker;
         Lcolor = colours.stable.line;
         MEdgeColor = [1 1 1];
@@ -80,7 +80,7 @@ Nsessions = numel(DeltaWord);
 
 %% correlation of mean(Closeness) and Distance per binsize analysis: some in wrong direction!
 
-load([localpath 'Dictionary_Convergence_Analyses_N35_' type])
+load([filepath 'Dictionary_Convergence_Analyses_N35_' type])
 
 for iB = 1:numel(binsizes)
     for iS = 1:Nsessions
@@ -152,13 +152,17 @@ for iS = 1:Nsessions
 end
     
 figure(hSessionAll); 
+% line([-1 1],[PosLimits.ChoiceY(1) PosLimits.ChoiceY(1)],'Color',ClrChoice,'Linewidth',widths.plot,'Linestyle','--');
+% line([-1 1],[PosLimits.ChoiceY(2) PosLimits.ChoiceY(2)],'Color',ClrChoice,'Linewidth',widths.plot,'Linestyle','--');
+% xlabel('Closeness to sleep epochs')
 line([0 1],[PosLimits.ChoiceY(1) PosLimits.ChoiceY(1)],'Color',ClrChoice,'Linewidth',widths.plot,'Linestyle','--');
 line([0 1],[PosLimits.ChoiceY(2) PosLimits.ChoiceY(2)],'Color',ClrChoice,'Linewidth',widths.plot,'Linestyle','--');
 xlabel('Spread in maze location')
 ylabel('Maze location')
 
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_LocationvsIQR_' type],'-dsvg');    
+% print([exportpath 'Fig8_LocationvsCloseness_' type],'-dsvg');    
+print([exportpath 'Fig8_LocationvsIQR_' type],'-dsvg');    
 
 
 %% density plot of median locations for example scatter
@@ -169,16 +173,19 @@ yaxislength = pos(4);
 % 
 % plot vertically
 figure('Units', 'centimeters', 'PaperPositionMode', 'auto','Position',[figsize(1:2),2, figsize(4)]);
+% patch(XDens{iBin},KernelDens{iB},colours.learning.marker)
 hp = patch(KernelDens.meds{iBin}./sum(KernelDens.meds{iBin}),XDens.meds{iBin},colours.trials.marker,'EdgeColor',colours.learning.edge); hold on % data
 alpha(0.3)
 plot(KernelDens.OverShufmeds{iBin}./sum(KernelDens.OverShufmeds{iBin}),XDens.OverShufmeds{iBin},'Color',colours.shuf.line,'Linewidth',widths.plot)
 line([0 1],[PosLimits.ChoiceY(1) PosLimits.ChoiceY(1)],'Color',ClrChoice,'Linewidth',widths.plot,'Linestyle','--');
 line([0 1],[PosLimits.ChoiceY(2) PosLimits.ChoiceY(2)],'Color',ClrChoice,'Linewidth',widths.plot,'Linestyle','--');
 
+% ylabel('Location')
 xlabel('Density')
+% view(90,90)
 set(gca,'XLim',[0 0.05],'YLim',[0 1])
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_LocationDensityExample_' type],'-dsvg');    
+print([exportpath 'Fig8_LocationDensityExample_' type],'-dsvg');    
 
 
 %% density plot per bin size
@@ -192,8 +199,10 @@ for iB = 1:numel(binsizes)
     
     % keyboard
     patch((iB*2-1) + pData./scle,XDens.meds{iB},colours.trials.marker,'EdgeColor',colours.learning.edge); hold on
+    % patch((iB*2-1) + pData./scle,XI,colours.trials.marker,'EdgeColor',colours.learning.edge); hold on
     alpha(0.3)
     plot((iB*2-1) + pShuf./scle,XDens.OverShufmeds{iBin},'Color',colours.shuf.line,'Linewidth',widths.plot)
+    % plot((iB*2-1) + pShuf./scle,XI,'Color',colours.shuf.line,'Linewidth',widths.plot)
     
     line([(iB*2-1) (iB*2-1)]-0.5,[0 1],'Color',colours.shuf.line); % separate each by a vertical line
     xtcks(iB) = (iB*2-1) + 0.75;
@@ -207,7 +216,7 @@ ylabel('Location')
 xlabel('Bin size (ms)')
 set(gca,'XTick',xtcks,'XTickLabel',{'1','2','3','5','10','20','50','100'});
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_LocationDensityByBins_' type],'-dsvg');    
+print([exportpath 'Fig8_LocationDensityByBins_' type],'-dsvg');    
 
 %% Closeness and IQR - probably need to eliminate zero IQRs here...
 for iB = 1:numel(binsizes)
@@ -235,6 +244,8 @@ for iS = 1:Nsessions
     figure(hClose); hold on
     
     % as function of Closeness
+    % IQR
+    % line([DeltaWord(iS).Bins(iBin).Trials.IndexDifference';DeltaWord(iS).Bins(iBin).Trials.IndexDifference'],[y_lower;y_upper], 'Color',Lcolor)
     % median
     plot(DeltaWord(iS).Bins(iBin).Trials.IndexDifference.*invertCloseness,y,'o','Markersize',M,'MarkerFaceColor',Mcolor,'MarkerEdgeColor',MEdgeColor);
         
@@ -247,7 +258,7 @@ xlabel('Closeness to sleep epochs')
 ylabel('Maze location')
 
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_LocationvsCloseness_' type],'-dsvg');    
+print([exportpath 'Fig8_LocationvsCloseness_' type],'-dsvg');    
 
 
 %% proportion by Closeness
@@ -265,17 +276,17 @@ ixRetain = alliqrs{iBin} > 0 & alliqrs{iBin} < maxIQR;
 Limits = [0.3,0.4];  % pre-choice point
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain) .* invertCloseness,Limits,divs,CIalpha,figsize,Maze.Pre,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_PreChoice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_PreChoice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
 
 Limits = [0.4,0.6];  % choice points
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain) .* invertCloseness,Limits,divs,CIalpha,figsize,Maze.Choice,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_Choice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_Choice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
 
 Limits = [0.8,1];  % arm end
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain) .* invertCloseness,Limits,divs,CIalpha,figsize,Maze.ArmEnd,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_ArmEnd_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_ArmEnd_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
 
 % 10 ms bins
 iBin = find(binsizes == 10);
@@ -283,17 +294,17 @@ ixRetain = alliqrs{iBin} > 0 & alliqrs{iBin} < maxIQR;
 Limits = [0.3,0.4];  % pre-choice point
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain) .* invertCloseness,Limits,divs,CIalpha,figsize,Maze.Pre,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_PreChoice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_PreChoice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
 
 Limits = [0.4,0.6];  % choice points
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain) .* invertCloseness,Limits,divs,CIalpha,figsize,Maze.Choice,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_Choice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_Choice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
 
 Limits = [0.8,1];  % arm end
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain).* invertCloseness,Limits,divs,CIalpha,figsize,Maze.ArmEnd,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_ArmEnd_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_ArmEnd_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
 
 % 50 ms bins
 iBin = find(binsizes == 50);
@@ -302,14 +313,14 @@ ixRetain = alliqrs{iBin} > 0 & alliqrs{iBin} < maxIQR;
 Limits = [0.3,0.4];  % pre-choice point
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain).* invertCloseness,Limits,divs,CIalpha,figsize,Maze.Pre,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_PreChoice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_PreChoice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
 
 Limits = [0.4,0.6];  % choice points
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain).* invertCloseness,Limits,divs,CIalpha,figsize,Maze.Choice,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_Choice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_Choice_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
 
 Limits = [0.8,1];  % arm end
 h = DiffClosenessOnMaze(allmeds{iBin}(ixRetain),allCloseness{iBin}(ixRetain).* invertCloseness,Limits,divs,CIalpha,figsize,Maze.ArmEnd,widths.plot);
 FormatFig_For_Export(h,fontsize,fontname,widths.axis);
-%print([exportpath 'Fig8_ArmEnd_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
+print([exportpath 'Fig8_ArmEnd_' type '_binsize_' num2str(binsizes(iBin))],'-dsvg');    
