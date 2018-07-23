@@ -335,7 +335,7 @@ FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
 %print([exportpath 'Fig6_K2_Sleep_PropDatavsShuf'],'-dsvg'); 
 
 %% Changes to ISIs
-load([localpath 'ExciteChangeSleep_Data_N' num2str(N) '_' type],'ISIs');
+load([filepath 'ExciteChangeSleep_Data_N' num2str(N) '_' type],'ISIs');
 
 yoff = 0.3;
 ygap = 0.01;
@@ -423,7 +423,7 @@ LinkedUnivariateScatterPlots(gca,[1,2],[Diff(iBin).Learn MjitDiff.Learn(:,iJit)]
     'MarkerFaceColor',[colours.learning.marker; shuflearn.marker],'MarkerEdgeColor',[colours.learning.edge; colours.learning.edge],...
     'MarkerSize',M,'Linewidth',widths.error,'strXlabel',strXlabel);
 ylabel('Distance from null model')
-set(gca,'YLim',[0 0.4])
+set(gca,'YLim',[0 0.3])
 set(gca,'XTick',xtick,'XTickLabel',strJlabel,'XMinorTick','off')
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
 %print([exportpath 'Fig6_5ms_Sleep_Depart_Null_Model_DatavsJitter10ms'],'-dsvg');     
