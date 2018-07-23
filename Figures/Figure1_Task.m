@@ -4,16 +4,6 @@ clear all; close all
 run figure_properties
 addpath('../Helper functions/');
 
-% if ispc
-%     datapath = 'C:\Users\lpzmdh\Dropbox\SpikeData\Adriens sample of Behaviour and Spikes\';
-%     strategypath = 'C:\Users\lpzmdh\Dropbox\Analyses\Bayesian strategy\';
-%     filepath = 'C:\Users\lpzmdh\Dropbox\Analyses\PfC Sampling hypothesis\';
-% else
-%     datapath = '/Users/mqbssmhg/Dropbox/SpikeData/Adriens sample of Behaviour and Spikes/';
-%     strategypath = '/Users/mqbssmhg/Dropbox/Analyses/Bayesian strategy/';
-%     filepath = '/Users/mqbssmhg/Dropbox/Analyses/PfC Sampling hypothesis/';
-% end
-
 % Original code: given original data (on CRCNS.org) organised into one folder per session
 % this processes breakdown of defined list of sessions into trials and epochs
 % Note: this breakdown only used to plot a panel in this figure, not for
@@ -67,7 +57,7 @@ ylabel('Session','FontSize',fontsize);
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis)
 
 % exportfig(gcf,'Fig2c_network','Color',color,'Format',format,'Resolution',dpi)
-print([exportpath 'Fig1_session_durations'],'-dsvg');
+%print([exportpath 'Fig1_session_durations'],'-dsvg');
 
 
 
@@ -87,7 +77,7 @@ xlabel('Trial','FontSize',fontsize);
 ylabel('Cumulative reward','FontSize',fontsize); 
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis)
 
-print('-dsvg',[exportpath 'Fig1_cumulative_reward']);
+%print('-dsvg',[exportpath 'Fig1_cumulative_reward']);
 
 
 %% a heat-map
@@ -117,13 +107,13 @@ hc = colorbar('location','northoutside','position',[posI(1) posI(2)+posI(4)+0.03
 set(hc,'xaxisloc','top')
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis)
 
-print('-dsvg',[exportpath 'Heatmap_cumulative_reward']);
+%print('-dsvg',[exportpath 'Heatmap_cumulative_reward']);
 
 
 %% example time-series of strategy choice
 % sliding window analysis from Simple-Strategy here....
 
-load([strategypath 'SimpleStrategy_0.85.mat'],'Sessions','pars'); % load Stable sessions - names and time-series
+load(['../Analysis code/SimpleStrategy_0.85.mat'],'Sessions','pars'); % load Stable sessions - names and time-series
 ixLearning = find([Sessions(:).OfficialLearn]);
 
 
@@ -149,7 +139,7 @@ xlabel('Trial','FontSize',fontsize);
 ylabel('P(strategy)','FontSize',fontsize); 
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis)
 
-print('-dsvg',[exportpath 'Fig1_Learn_PStrategy']);
+%print('-dsvg',[exportpath 'Fig1_Learn_PStrategy']);
 
 
 %% Stair plots of dominant strategy: for both Learn and Stable sessions (set blnLearn)
@@ -158,8 +148,8 @@ print('-dsvg',[exportpath 'Fig1_Learn_PStrategy']);
 
 blnLearn = 0;  % plot learn or stable?
 figsize = [3 3];
-load([strategypath 'SimpleStrategy_0.85.mat'],'Sessions','pars'); % load Stable sessions - names and time-series
-load([strategypath 'SimpleStable_0.85.mat']); % table of chosen stable sessions - shows which ones were excluded
+load(['../Analysis code/SimpleStrategy_0.85.mat'],'Sessions','pars'); % load Stable sessions - names and time-series
+load(['../Analysis code/SimpleStable_0.85.mat']); % table of chosen stable sessions - shows which ones were excluded
 
 if blnLearn
     ixSessions = find([Sessions(:).OfficialLearn]);
@@ -209,10 +199,10 @@ end
 cmap = brewermap(numel(ixSessions)+5,'Greys');
 if blnLearn
     color = colours.learning.line;
-    cmap = brewermap(numel(ixSessions)+5,'Greys')
+    cmap = brewermap(numel(ixSessions)+5,'Greys');
 else
     color = colours.stable.line;
-    cmap = brewermap(numel(ixSessions)+5,'Blues')
+    cmap = brewermap(numel(ixSessions)+5,'Blues');
 end
 
 hlight = [0.8 0.4 0.3];
@@ -234,7 +224,7 @@ xlabel('Trial');
 ylabel(strY); 
 FormatFig_For_Export(gcf,fontsize,fontname,widths.axis);
 
-print([exportpath strFname],'-dsvg'); 
+%print([exportpath strFname],'-dsvg'); 
 
 
 
